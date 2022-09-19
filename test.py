@@ -23,11 +23,10 @@ transform = transforms.Compose([
 
 img = Image.open(args.image_path)
 
-img = transform(img)
+img = transform(img).to(device)
 with torch.no_grad():
     outputs = model(img.unsqueeze(0).to('cuda'))
 
 mask = outputs.squeeze(0).argmax(axis=0)
 mask = array1d_to_pil_image(mask.cpu().numpy())
 plt.imshow(mask)
-plt.show()

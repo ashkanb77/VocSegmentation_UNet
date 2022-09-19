@@ -60,7 +60,7 @@ class Checkpoint:
     @staticmethod
     def load_model(path):
         checkpoint = torch.load(path, map_location=device)
-        model = UNet(22)
+        model = UNet(22).to(device)
 
         model.load_state_dict(checkpoint['model'])
         return model, checkpoint['loss']
@@ -116,3 +116,4 @@ def plot_images(dataset, rows=2, cols=8, title=None):
             axes[r, c].axis('off')
             axes[r, c + 1].imshow(mask)
             axes[r, c + 1].axis('off')
+

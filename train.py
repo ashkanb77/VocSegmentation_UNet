@@ -62,7 +62,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def train(model, train_dataloader, val_dataloader, checkpoint, optimizer, epochs, lr, plot=True):
     criterion = nn.CrossEntropyLoss()
-    jaccard = JaccardIndex(num_classes=22)
+    jaccard = JaccardIndex(num_classes=22).to(device)
 
     losses = []
     val_losses = []
@@ -93,9 +93,9 @@ def train(model, train_dataloader, val_dataloader, checkpoint, optimizer, epochs
                 loss.backward()
                 optimizer.step()
                 total_loss += loss.item()
-                miou += iou
+                miou += iou.item()
 
-                tepoch.set_postfix(loss=loss.item(), MIOU=iou)
+                tepoch.set_postfix(loss=loss.item(), MIOU=iou.item())
 
         total_loss = total_loss / n_batches
         miou = miou / n_batches
@@ -130,7 +130,7 @@ def train(model, train_dataloader, val_dataloader, checkpoint, optimizer, epochs
 
 def eval(model, val_dataloader, checkpoint):
     criterion = nn.CrossEntropyLoss()
-    jaccard = JaccardIndex(num_classes=22)
+    jaccard = JaccardIndex(num_classes=22).to(device)
 
     model.eval()
 
@@ -148,7 +148,7 @@ def eval(model, val_dataloader, checkpoint):
             loss = criterion(outputs, masks.long())
             iou = jaccard(outputs, masks)
             total_loss += loss.item()
-            miou += iou
+            miou += iou.item()
 
     total_loss = total_loss / n_batches
     miou = miou / n_batches
