@@ -16,7 +16,7 @@ args = parser.parse_args()
 
 model, loss = Checkpoint.load_model(args.checkpoint_path)
 transform = transforms.Compose([
-    transforms.Resize((256, 256)),
+    transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
     transforms.ToTensor(),
     transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD)
 ])
