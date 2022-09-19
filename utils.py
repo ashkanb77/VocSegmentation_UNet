@@ -60,9 +60,7 @@ class Checkpoint:
     @staticmethod
     def load_model(path):
         checkpoint = torch.load(path, map_location=device)
-        model = UNet(
-            checkpoint['embed_size']
-        )
+        model = UNet(22)
 
         model.load_state_dict(checkpoint['model'])
         return model, checkpoint['loss']

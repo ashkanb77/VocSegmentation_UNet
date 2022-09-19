@@ -34,7 +34,7 @@ class UNet(nn.Module):
 
         self.pool = nn.MaxPool2d(2)
 
-        self.downs.add_module('conv1', ResidualTwoConv(1, 64))
+        self.downs.add_module('conv1', ResidualTwoConv(3, 64))
         self.downs.add_module('conv2', ResidualTwoConv(64, 128))
         self.downs.add_module('conv3', ResidualTwoConv(128, 256))
         self.downs.add_module('conv4', ResidualTwoConv(256, 512))
