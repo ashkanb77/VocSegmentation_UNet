@@ -45,7 +45,7 @@ test_transforms = A.Compose([
 ])
 
 train_dataset = VOCSeg(
-    'dataset', download=False, image_set='train',
+    'dataset', download=True, image_set='train',
      transforms=train_transforms,
      )
 
